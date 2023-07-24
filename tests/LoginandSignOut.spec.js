@@ -4,7 +4,7 @@ const {LoginPage} = require('../pageobjects/LoginPage');
 const {MySettingsPage} = require('../pageobjects/MySettingsPage');
 const {LogoutPage} = require('../pageobjects/LogoutPage');
 
-test('verify login and out', async({page}) =>
+test('verify login and Logout', async({page}) =>
 {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
@@ -14,5 +14,7 @@ test('verify login and out', async({page}) =>
     await mysettingsPage.mysettingsDropDown();
     const logoutPage = new LogoutPage(page);
     logoutPage.validSignOut();
+    console.log(await page.locator("//p[text()='Log in to continue to the MakerSights Workspace.']").textContent());
+    await expect(page.locator("//p[text()='Log in to continue to the MakerSights Workspace.']")).toContainText('Log in to continue to the MakerSights Workspace.');
 
 });

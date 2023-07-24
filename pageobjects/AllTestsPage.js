@@ -15,33 +15,29 @@ class AllTestsPage{
         this.duplicatepopupinclude = page.locator("//button[text()='Include']");
         this.duplicatepopupexclude = page.locator("//button[text()='Exclude']");
         this.duplicatepopupcloseicon = page.locator("(//div[@class='close-icon'])[2]")
-        this.deletetestyes = page.locator("(//button[contains(@class,'ms-ds-button ms-modal__content-button')])[2]");
-        this.deletetest = page.locator("(//button[contains(@class,'ms-ds-button ms-modal__content-button')])[1]");
+        this.delete = page.locator("//div[text()='Delete']");
+        this.deletetestcancelbutton = page.locator("(//button[text()='Cancel'])[1]");
+        this.deletetestyesbutton = page.locator("//button[text()='Yes']");
+        this.deletetestcloseicon = page.locator("(//div[text()='Delete Test']/following-sibling::div)[1]");
         this.welcomeheading = page.locator("/*[@id='tab-content-0']/div/md-content/div/div[2]/span/h1");
         this.gobacklink = page.locator("//div[text()='Go Back']");
         
-        //Filters
-        this.conceptfilter = page.locator("(//input[@class='ms-checkbox-input__input'])[1]");
-        this.sellinfilter = page.locator("(//input[@class='ms-checkbox-input__input'])[2]");
-        this.investmentreviewfilter = page.locator("(//input[@class='ms-checkbox-input__input'])[3]");
-        this.sketchreviewfilter = page.locator("(//span[text()='Investment Review']/following::input)[1]");
-        this.lineadoptionfilter = page.locator("//span[text()='Line Adoption']");
-        this.otherfilter = page.locator("(//span[text()='Line Adoption']/following::input)[1]");
-        this.malefilter = page.locator("(//label[text()='Gender']/following::input)[1]");
-        this.unisexfilter = page.locator("(//span[text()='male']/following::input)[1]");
-        this.mensfilter = page.locator("(//span[text()='unisex']/following::input)[1]");
-        this.womensfilter = page.locator("//span[contains(text(),\"women's\")]");
-        this.girlsfilter = page.locator("//span[contains(text(),\"girls'\")]");
-        this.draftfilter = page.locator("(//label[text()='Status']/following::input)[1]");
-        this.closedfilter = page.locator("(//span[text()='Draft']/following::input)[1]");
-        this.activefilter = page.locator("(//span[text()='Closed']/following::input)[1]");
+        //Decision Points
+        this.globallinereviewfilter = page.locator("(//input[@type='checkbox'])[1]");
+        this.sketchreviewfilter = page.locator("(//input[@type='checkbox'])[2]");
+        this.conceptfilter = page.locator("(//input[@type='checkbox'])[3]");
 
+         //Status
+         this.closedfilter = page.locator("(//label[text()='Status']/following::input)[1]");
+         this.draftfilter = page.locator("(//span[text()='Closed']/following::input)[1]");
+         
         //coloumn filters
         this.coloumntestname = page.locator("(//div[@class='rt-resizable-header-content'])[1]");
         this.coloumnactivitydate = page.locator("(//div[@class='rt-resizable-header-content'])[2]");
         this.coloumncountries = page.locator("(//div[@class='rt-resizable-header-content'])[3]");
         this.coloumndecisionpoint = page.locator("//div[text()='Decision Point']");
         this.coloumnstatus = page.locator("//div[text()='Status']");
+        this.coloumnresponses = page.locator("//div[text()='# Responses']");
 
 
         //Grouped Tests popup
@@ -97,9 +93,76 @@ class AllTestsPage{
             await this.alltestspage.click();
             await this.kebabmenu.click();
             await this.kebabduplicate.click();
-            await this.duplicatepopupcloseicon();
+            await this.duplicatepopupcloseicon.click();
 
         }
+
+        async validDelete()
+        {
+            await this.delete.click();
+            await this.deletetestcancelbutton.click();
+            await this.alltestspage.click();
+            await this.kebabmenu.click();
+            await this.delete.click();
+            await this.deletetestcancelbutton.click();
+            await this.alltestspage.click();
+            await this.kebabmenu.click();
+            await this.delete.click();
+            await this.deletetestcloseicon.click();
+            await this.alltestspage.click();
+            await this.kebabmenu.click();
+            await this.delete.click();
+            await this.deletetestyesbutton.click();
+        }
+
+        async validGlobalLineReviewFilters()
+        {
+            await this.alltestspage.click();
+            await this.globallinereviewfilter.click();
+            
+        }
+
+        async validSketchReviewFilters()
+        {
+            await this.alltestspage.click();
+            await this.sketchreviewfilter.click();
+            
+        }
+
+        async validConceptFilters()
+        {
+            await this.alltestspage.click();
+            await this.conceptfilter.click();
+            
+        }
+
+        async validClosedFilters()
+        {
+            await this.alltestspage.click();
+            await this.closedfilter.click();
+            
+        }
+
+        async validDraftFilters()
+        {
+            await this.alltestspage.click();
+            await this.draftfilter.click();
+            
+        }
+
+        async validColumnHeaderFilters()
+
+        {
+            await this.alltestspage.click();
+            await this.coloumntestname.click();
+            await this.coloumnactivitydate.click();
+            await this.coloumncountries.click();
+            await this.coloumndecisionpoint.click();
+            await this.coloumnstatus.click();
+            await this.coloumnresponses.click();
+            
+        }
+
 
 }
     

@@ -5,14 +5,26 @@ class DashBoardPage
         this.page = page;
         this.dashboard = page.locator("//a[contains(text(),'Dashboard')]");
         this.addnewassortment = page.locator("//button[text()='Add New Assortment']");
-        this.firstassortment = page.locator("(//div[@class='assortment-info'])[1]");
+        this.latestassortment = page.locator("(//div[@class='left-section'])[1]");
         this.nextassortment = page.locator("//button[@id='icon-button-Next']");
         this.previousassortment = page.locator("//button[@id='icon-button-Previous']");
         this.assortmentkebabmenu = page.locator("(//button[@data-testid='dropdown-icon'])[1]");
         this.addnewevent = page.locator("//button[text()='Add New Event']");
 
         //filters
-        this.allseasons = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6'])[1]");
+        this.allseasons = page.locator("/div[text()='All Seasons']");
+        this.fall = page.getByLabel("fall");
+        this.holiday = page.getByLabel("holiday");
+        this.holiday = page.getByLabel("resort");
+        this.holiday = page.getByLabel("spring");
+        this.holiday = page.getByLabel("summer");
+        this.allseasonscloseicon = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6']//div)[1]");
+
+        
+
+
+
+
         this.allyears = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6'])[2]");
         this.allgenders = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6'])[3]");
         this.allcategories = page.locator("//div[text()='All Categories']");
@@ -52,21 +64,42 @@ class DashBoardPage
 
     }
 
-
-
-    async openAssortment()
+    async validbulkDownload()
         {
-            await this.firstassortment.click();
-        }
-
-    async bulkUpload()
-        {
+            await this.dashboard.click();
+            await this.latestassortment.click();
             await this.bulkupload.click();
             await this.downloadtemplatefile.click();
             await this.downloadcurrentproducts.click();
-            await this.uploadfile.setInputFiles('./MAKERSIGHTS_PORTAL/utils/myfile.xlsx');
-            await this.savebulkupload.click();
+            await this.bulkuploadcloseicon.click();
+        }
 
+    async validbulkUpload()
+        {
+            await this.dashboard.click();
+            await this.latestassortment.click();
+            await this.bulkupload.click();
+
+        }
+
+        async validFilters()
+        {
+            await this.dashboard.click();
+            await this.allseasons.click();
+            await this.fall.click();
+            await this.allseasonscloseicon.click();
+            await this.allseasons.click();
+            await this.holiday.click();
+            await this.allseasonscloseicon.click();
+            await this.allseasons.click();
+            await this.resort.click();
+            await this.allseasonscloseicon.click();
+            await this.allseasons.click();
+            await this.spring.click();
+            await this.allseasonscloseicon.click();
+            await this.allseasons.click();
+            await this.spring.click();
+            await this.allseasonscloseicon.click();
 
         }
 }

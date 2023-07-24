@@ -49,7 +49,7 @@ test('validate Links in All Tests page', async({page}) =>
     await page.goBack();
 });
 
-test.only('validate Duplicate in All Tests page', async({page}) =>
+test('validate Duplicate in All Tests page', async({page}) =>
 {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
@@ -59,7 +59,58 @@ test.only('validate Duplicate in All Tests page', async({page}) =>
     await alltestspage.validPreview();
     await alltestspage.validDuplicate();
 
-   
+
 });
 
+test('validate Delete in All Tests page', async({page}) =>
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const alltestspage = new AllTestsPage(page);
+    await alltestspage.validPreview();
+    await alltestspage.validDelete();
+
+});
+
+test('validate Filters in All Tests page', async({page}) =>
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const alltestspage = new AllTestsPage(page);
+    await alltestspage.validGlobalLineReviewFilters();
+    await expect( page.locator("(//input[@type='checkbox'])[1]")).toBeChecked();
+    await page.locator("(//input[@type='checkbox'])[1]").uncheck();
+    expect( await page.locator("(//input[@type='checkbox'])[1]").isChecked()).toBeFalsy();
+    await alltestspage.validSketchReviewFilters();
+    await expect( page.locator("(//input[@type='checkbox'])[2]")).toBeChecked();
+    await page.locator("(//input[@type='checkbox'])[2]").uncheck();
+    expect( await page.locator("(//input[@type='checkbox'])[2]").isChecked()).toBeFalsy();
+    await alltestspage.validConceptFilters();
+    await expect( page.locator("(//input[@type='checkbox'])[3]")).toBeChecked();
+    await page.locator("(//input[@type='checkbox'])[3]").uncheck();
+    expect( await page.locator("(//input[@type='checkbox'])[3]").isChecked()).toBeFalsy();
+    await alltestspage.validClosedFilters();
+    await expect( page.locator("(//label[text()='Status']/following::input)[1]")).toBeChecked();
+    await page.locator("(//label[text()='Status']/following::input)[1]").uncheck();
+    expect( await page.locator("(//label[text()='Status']/following::input)[1]").isChecked()).toBeFalsy();
+    await alltestspage.validDraftFilters();
+    await expect( page.locator("(//span[text()='Closed']/following::input)[1]")).toBeChecked();
+    await page.locator("(//span[text()='Closed']/following::input)[1]").uncheck();
+    expect( await page.locator("(//span[text()='Closed']/following::input)[1]").isChecked()).toBeFalsy();
+});
+
+test('validate Column Headers in All Tests page', async({page}) =>
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const alltestspage = new AllTestsPage(page);
+    await alltestspage.validColumnHeaderFilters();
+    
+});
 

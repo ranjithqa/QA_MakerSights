@@ -163,6 +163,12 @@ class AllTestsPage{
             
         }
 
+        async goToResults() {
+            await this.alltestspage.click();
+            await this.alltestssearchbar.fill("PTC Taylor Stitch Demo");
+            await this.kebabmenu.click();
+        }
+
 
 }
     

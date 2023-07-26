@@ -12,7 +12,7 @@ test('verify Insight Cards view on Results page', async({page}) =>
     await loginPage.validLogin(dataset.username,dataset.password);
     const alltestsPage = new AllTestsPage(page);
     await alltestsPage.goToResults();
-    await page.click('text="PTC Taylor Stitch Demo"');
+    await page.click('text="2022 - Fall - Mens Shirts"');
 
     const resultsPage = new ResultsPage(page);
     
@@ -24,14 +24,11 @@ test('verify Insight Cards view on Results page', async({page}) =>
     // get detractors percentage for a product w/o any audience filters
     await expect(resultsPage.unfilteredDetractorPercentage).toBeVisible();
 
-    // Apply a filter and compare results with and without filters
+    // Apply audience + gender filter and compare results with and without filters
 
     await resultsPage.filterByFemale.check();
+    await resultsPage.filterByAudience.check();
     await expect(resultsPage.filteredDetractorPercentage).toBeVisible();
-
-    await resultsPage.filterByFemale.uncheck();
-
-
 });
   
  

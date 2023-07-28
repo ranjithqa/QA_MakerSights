@@ -64,5 +64,7 @@ test('verify Consumers view on Results page', async({page}) =>
     expect(page, "China", { selector: "dl:nth-of-type(3)" });
     await resultsPage.consumersSortByLabel.first().click();
     expect(page, "China", { selector: "dl" });
+    await resultsPage.consumersSortByInitialOrder.first().click();
+    expect(page, "China", {selector: "dl"})
 });
   

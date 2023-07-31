@@ -58,6 +58,7 @@ class ResultsPage
         this.LEGAddProductDusk = page.locator("button:has-text('Dusk')");
         this.LEGProcessChartButton = page.locator(":text('Process Chart')");
         this.LEGProcessingChartSpinner = page.locator(":text('Processing Chart')");
+        this.LEGScreen = page.locator(".ms-turf-result");
 
 
         
@@ -68,12 +69,15 @@ class ResultsPage
         this.filterByPreferNotToSay = page.locator("div.results-filters__option-label:has-text('Prefer not to say')");
 
         this.filterByAudience = page.locator(".ms-filter-section:has-text('Audience') >> label:has-text('Modern outdoorsman')");
-
         this.filterByCountry_UnitedStates = page.locator("#results-country-tab__united_states");
         this.filterByCountry_Germany = page.locator("#results-country-tab__germany");
         this.filterByCountry_China = page.locator("#results-country-tab__china");
-
         this.filterAudienceAlert = page.locator(".ms-alert-content")
+
+        this.LEGFilterByMale = page.locator(".ms-form-group__label:has-text('Male')");
+        this.LEGFilterByFemale = page.locator(".ms-form-group__label:has-text('Female')");
+        this.LEGFilterByAll = page.locator(".ms-form-group__label:has-text('All')");
+        this.LEGFilterByCountry_US = page.locator(".flag-icon flag-shadow >>nth=1");
 
     }
 

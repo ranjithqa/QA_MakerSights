@@ -40,21 +40,24 @@ test('verify create and process subgraph', async({page}) => {
 
 });
 
+test('verify filter Line Efficiency Graph', async({page}) => {
 
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const alltestsPage = new AllTestsPage(page);
+    await alltestsPage.goToResults();
+    await page.click("text='2024 Fall Men's Shirts - Evaluate Newness'");
+    const resultsPage = new ResultsPage(page);
 
+    await resultsPage.lineEfficiency.click();
 
-// // create new subgraph selecting another subgraph as its default user selections
-// await page.click(':text-is("Create New Chart")');
-// const testName2 = `QAW: ${faker.random.word()}`;
-// await page.fill('[placeholder="My chart title"]', testName2);
-// await page.click(':text("Use selections from:Default")');
-// await page.click(`[id*="react-select"] :text("${testName}")`);
-// await page.click(':text("Create New")');
+    // apply gender filters
+    await resultsPage.LEGFilterByFemale.click();
+    await expect(resultsPage.LEGScreen).toBeVisible();
+    await resultsPage.LEGFilterByAll.click();
+    await expect(resultsPage.LEGScreen).toBeVisible();
 
-// // assert that the correct preselected items appear as cut or kept
-// await expect(
-//   page.locator('g circle ~ [data-icon="horizontal-rule"]')
-// ).toBeVisible();
-// await expect(
-//   page.locator(':text-is("1 Product Kept")')
-// ).toBeVisible();
+    // add test for country filter
+});

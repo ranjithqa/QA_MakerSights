@@ -49,6 +49,17 @@ class ResultsPage
         this.consumersSortByPercent = page.locator("text=Percent");
         this.consumersSortByLabel = page.locator("text=Label");
 
+        // LEG
+        this.lineEfficiency = page.locator("//div[contains(text(),'Line Efficiency')]");
+        this.legCreateNewChart = page.locator(":text('Create New Chart')");
+        this.legCreateNewChartModal = page.locator(":text('Create A New Chart Scenario')");
+        this.legCreateNewButton = page.locator('text="Create New"');
+        this.LEGAddProductNashville = page.locator("button:has-text('Nashville')");
+        this.LEGAddProductDusk = page.locator("button:has-text('Dusk')");
+        this.LEGProcessChartButton = page.locator(":text('Process Chart')");
+        this.LEGProcessingChartSpinner = page.locator(":text('Processing Chart')");
+
+
         
         // Filters
         this.filterByNonBinary = page.locator("div.results-filters__option-label:has-text('Non-binary')");

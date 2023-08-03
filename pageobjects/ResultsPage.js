@@ -77,8 +77,6 @@ class ResultsPage
         this.LEGFilterByMale = page.locator(".ms-form-group__label:has-text('Male')");
         this.LEGFilterByFemale = page.locator(".ms-form-group__label:has-text('Female')");
         this.LEGFilterByAll = page.locator(".ms-form-group__label:has-text('All')");
-        this.LEGFilterByCountry_US = page.locator(".flag-icon flag-shadow >>nth=1");
-
     }
 
 }

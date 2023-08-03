@@ -169,6 +169,11 @@ class AllTestsPage{
             await this.kebabmenu.click();
         }
 
+        async goToSalesProjectionSurvey() {
+            await this.alltestssearchbar.fill("2019 - Holiday - Mens - Tops");
+            await this.kebabmenu.click();
+        }
+
 
 }
     

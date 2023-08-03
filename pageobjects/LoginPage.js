@@ -15,6 +15,12 @@ class LoginPage{
         //await this.page.goto("https://dev-app.makersights.com/");
     }
 
+    async goto2()
+    {
+        await this.page.goto2("https://dev-app.makersights.com/#!/brand/6195868ba759f770948185a6/campaign/61a7061e3e5e72f27cc4c21d/results/?from=all_tests");
+           
+    }
+
     async validLogin(username,password)
     {
         await this.username.type(username);

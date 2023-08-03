@@ -10,6 +10,15 @@ class DashBoardPage
         this.previousassortment = page.locator("//button[@id='icon-button-Previous']");
         this.assortmentkebabmenu = page.locator("(//button[@data-testid='dropdown-icon'])[1]");
         this.addnewevent = page.locator("//button[text()='Add New Event']");
+        this.addnewassortmentyear = page.locator("(//div[@class='ms-select-single__control css-hpsnpn-control'])[1]");
+        this.addnewassortmentyseason = page.locator("//div[text()='Season']");
+        this.addnewassortmentcategory = page.locator("//div[text()='Category']");
+        this.savenewassortment = page.locator("//button[text()='Save']");
+        this.firstassortment = page.locator("(//div[@class='assortment-info'])[1]");
+        this.firstassortmentkebabmenu = page.locator("(//button[@data-testid='dropdown-icon'])[1]");
+        this.deletenewAssortment = page.locator("(//div[text()='Delete'])[1]");
+        this.confirmdeletenewassortment = page.locator("//button[text()='Delete']");
+
 
         //filters
         this.allseasons = page.locator("/div[text()='All Seasons']");
@@ -19,11 +28,6 @@ class DashBoardPage
         this.holiday = page.getByLabel("spring");
         this.holiday = page.getByLabel("summer");
         this.allseasonscloseicon = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6']//div)[1]");
-
-        
-
-
-
 
         this.allyears = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6'])[2]");
         this.allgenders = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6'])[3]");
@@ -61,7 +65,13 @@ class DashBoardPage
         this.primarytest = page.locator("(//div[@role='rowgroup']//div)[1]");
         this.primarytestkebabmenu = page.locator("(//button[@id='icon-button-'])[2]");
         this.createmeeting = page.locator("//button[text()='Create Meeting']");
-
+        this.expandimage = page.locator("(//img[@class='ms-image__image ms-image__image--contain'])[3]");
+        this.firstproduct = page.locator("(//div[@class='image-container'])[1]");
+        this.closeproductdetails = page.locator("(//div[@class='close-icon'])[2]");
+        this.dashboardtests = page.locator("(//div[text()='Tests'])[2]");
+        this.globallinereviewfilter = page.locator("(//input[@type='checkbox'])[1]");
+        this.sketchreviewfilter = page.locator("(//input[@type='checkbox'])[2]");
+        this.draftfilter = page.locator("(//input[@type='checkbox'])[3]");
     }
 
     async validbulkDownload()
@@ -102,5 +112,82 @@ class DashBoardPage
             await this.allseasonscloseicon.click();
 
         }
+
+    async validateProductDetailsView()
+    {
+        await this.dashboard.click();
+        await this.latestassortment.click();
+        await this.products.click();
+        await this.firstproduct.click();
+        await this.expandimage.click();
+        await this.closeproductdetails.click();
+
+    }
+
+    async validateTestsOverview()
+    {
+        await this.dashboard.click();
+        await this.latestassortment.click();
+        await this.dashboardtests.click();
+
+    }
+
+    async validGlobalLineReviewFilters()
+    {
+        await this.globallinereviewfilter.click();
+        
+    }
+
+    async validSketchReviewFilters()
+    {
+        await this.sketchreviewfilter.click();
+        
+    }
+
+    async validDraftFilters()
+    {
+        await this.draftfilter.click();
+        
+    }
+
+    async addAndDeleteAssortment()
+    {
+        await this.addnewassortment.click();
+        
+        // add year
+        var years = ["2022", "2023", "2024", "2025", "2026",];
+        var random = Math.floor(Math.random() * years.length);
+        var randomYear = years[random];
+        await this.addnewassortmentyear.click();
+        await this.page.click(`.ms-select-single__menu-list >> text=${randomYear}`);
+
+        // add season
+        var seasons = ["fall", "holiday", "resort", "spring", "summer"];
+        var random = Math.floor(Math.random() * seasons.length);
+        var seasonStr = seasons[random];
+        await this.addnewassortmentyseason.click();
+        await this.page.click(`.ms-select-single__menu-list >> text=${seasonStr}`);
+        var capitalizedSeason = seasonStr.charAt(0).toUpperCase() + seasonStr.slice(1);
+
+        // add category
+        await this.addnewassortmentcategory.click();
+        await this.addnewassortmentcategory.type('Men\'s Shirts')
+        await this.page.click(`.ms-select-single__menu-list >> text=Men\'s Shirts`);
+    
+        await this.savenewassortment.click();
+
+        // assert assortment saved
+        //await assertText(page, `${capitalizedSeason} ${randomYear}`);
+
+        // delete assortment
+        await this.page.click(`.grow:above(:text("${capitalizedSeason} ${randomYear}"))`);
+        await this.page.click(".open :visible");
+        //await assertText(page, "Delete Assortment");
+        await this.confirmdeletenewassortment.click();
+        //await assertNotText(page, `${capitalizedSeason} ${r   andomYear}`);
+
+    }
+
+    
 }
 module.exports = {DashBoardPage}

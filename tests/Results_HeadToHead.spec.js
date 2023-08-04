@@ -10,6 +10,7 @@ test('verify Head to Head feauture on Results page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestsPage = new AllTestsPage(page);
     await alltestsPage.goToResults();
     await page.click('text="2022 - Fall - Mens Shirts"');

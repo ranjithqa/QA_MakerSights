@@ -4,7 +4,7 @@ const {LoginPage} = require('../pageobjects/LoginPage');
 const {AllTestsPage} = require('../pageobjects/AllTestsPage');
 const {ResultsPage} = require('../pageobjects/ResultsPage')
 
-test('verify M/S admins can switch between brands', async({page}) => {
+test('verify sales projection/investment review tests are no longer supported', async({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     console.log(await page.title());

@@ -54,7 +54,7 @@ test('Create and delete user', async ({page}) =>
     await brandSettingsPage.createAndDeleteUser();
 });
 
-test.only('Add point based value question', async ({page}) => 
+test('Add point based value question', async ({page}) => 
 {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
@@ -63,4 +63,26 @@ test.only('Add point based value question', async ({page}) =>
     const brandSettingsPage = new BrandSettingsPage(page);
     await brandSettingsPage.addPointbasedValueQuestion();
 });
+
+test('Add Image response with file picker and remove image response', async ({page}) => 
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const brandSettingsPage = new BrandSettingsPage(page);
+    await brandSettingsPage.addAndDeleteResponse();
+});
+
+test.only('Swgmentation Q Key Behaviour', async ({page}) => 
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const brandSettingsPage = new BrandSettingsPage(page);
+    await brandSettingsPage.segmentationQKeyBehaviour();
+});
+
+
 

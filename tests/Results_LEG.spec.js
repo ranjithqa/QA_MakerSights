@@ -61,9 +61,9 @@ test('verify filter Line Efficiency Graph', async({page}) => {
 
     // apply gender filters
     await resultsPage.LEGFilterByFemale.click();
-    await expect(resultsPage.LEGScreen).toBeVisible();
+    await expect(resultsPage.LEGResults).toBeVisible();
     await resultsPage.LEGFilterByAll.click();
-    await expect(resultsPage.LEGScreen).toBeVisible();
+    await expect(resultsPage.LEGResults).toBeVisible();
 
     // add test for country filter
 });
@@ -135,4 +135,58 @@ test('verify create subgraph from keep green button', async({page}) => {
         "fill",
         "rgb(28, 100, 242)"
     );
+});
+
+test('verify LEG is generated when there are at least 250 respondents and no significant data screen when filters are applied', async({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
+    const alltestsPage = new AllTestsPage(page);
+    await alltestsPage.goToResults();
+    await page.click("text='PTC Taylor Stitch Demo'");
+    const resultsPage = new ResultsPage(page);
+
+    // view LEG results
+    await resultsPage.lineEfficiency.click();
+    await expect(resultsPage.LEGResults).toBeVisible();
+    // assert bar chart is visible and all products are visible on the bar chart
+    await expect(resultsPage.LEGBarChart).toBeVisible();
+    await expect(resultsPage.LEGBottomProducts).toHaveCount(5);
+
+    // verify total responses are 250 or more
+    await resultsPage.getResponseCountLocator(250);
+
+    // filter by gender so that responses are <250
+    await resultsPage.LEGFilterByFemale.click();
+    await resultsPage.getFilteredResponseCount(138, 250, 55);
+    await expect(resultsPage.LEGNoSignificantDataScreen).toBeVisible();
+
+    await resultsPage.LEGFilterByMale.click();
+    await expect(resultsPage.LEGNoSignificantDataScreen).toBeVisible();
+
+    // clear filters
+    await resultsPage.LEGFilterByAll.click();
+    await expect(resultsPage.LEGResults).toBeVisible();
+});
+
+
+test('verify LEG is not generated for an active test with <250 responses', async({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
+    const alltestsPage = new AllTestsPage(page);
+    await alltestsPage.goToResults();
+    await page.click("text='Automation Active Test - Do not edit'");
+    const resultsPage = new ResultsPage(page);
+
+    await resultsPage.lineEfficiency.click();
+    await expect(resultsPage.LEGBarChart).toBeHidden();
+
+    await resultsPage.getResponseCountLocator(0);
+
+    await expect(resultsPage.LEGLessThan250ResponsesScreen).toBeVisible();
 });

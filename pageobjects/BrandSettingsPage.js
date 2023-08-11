@@ -435,6 +435,243 @@ class BrandSettingsPage
         await expect(this.page.locator(`text=${questionTitle}`)).not.toBeVisible();
 
     }
+
+    async addAndDeleteResponse()
+    {
+        // go to settings
+        await this.page.click(':text("Settings")');
+
+        // go to Segmentation Questions
+        await this.page.click(':text("Segmentation Questions")');
+
+        // wait for data to load
+        await this.page.waitForTimeout(5000);
+
+        // delete residual questions if present
+        await this.page.mouse.wheel(0, 9000) // scroll down to get possible paginated results
+        try {
+        await expect(page.locator(':text("Add image response")').first())
+            .not.toBeVisible({ timeout: 10000 });
+        } catch{
+        var questions = this.page.locator(':text("Add image response")');
+
+        while (await questions.count()) {
+            // click trash
+            await this.page.click('[data-icon="trash"]:right-of(:text("Add image response"))');
+            await expect(this.page.locator('text=Are you sure you want to remove this segmentation question?')).toBeVisible();
+            await this.page.click(`.is-active .ms-ds-button--color-primary:has-text("Delete")`);
+
+            // assert deleted
+            await expect(this.page.locator(':text("Segmentation Question deleted.")'))
+            .toBeVisible({ timeout: 30000 });
+            await expect(this.page.locator(':text("Segmentation Question deleted.")'))
+            .not.toBeVisible({ timeout: 30000 });
+        }
+
+        await expect(this.page.locator(':text("Add image response")').first())
+        .not.toBeVisible({ timeout: 10000 });
+        }
+
+        // add question
+        await this.page.click(':text("Add New")');
+
+        // check image
+        await this.page.check('[value="singleImage"]');
+
+        // add title
+        await this.page.fill(`[placeholder="Title / Question you'd like to ask"]`, "Add image response");
+
+        // add wolf image
+        this.page.once('filechooser', async (chooser) => await chooser.setFiles('utils/blacktshirt.jpeg'));
+        await this.page.click(':text("Drop file here or browse file")');
+
+        //await this.page.waitForTimeout(5000);
+        // add wolf image name
+        await this.page.fill('[role="button"] input', "Choice Wolf");
+
+        // add wolf pack image
+        this.page.once('filechooser', async (chooser) => await chooser.setFiles('utils/whiteshirt.jpeg'));
+        await this.page.click(':text("Drop file here or browse file")');
+
+        // wait for 3 images to be visible
+        await expect(this.page.locator('img'))
+        .toHaveCount(3, { timeout: 30000 });
+
+        // add wolf pack image name
+        await this.page.fill('[role="button"] input >> nth=-1', "Choice Wolf Pack");
+
+        // click save
+        await this.page.click(':text("Save")');
+
+        // assert created
+        await expect(this.page.locator(':text("Add image response")').first())
+        .toBeVisible({ timeout: 10000 });
+
+        // click edit
+        await this.page.click('[data-icon="pencil"]:right-of(:text("Add image response"))');
+
+        // assert images saved
+        await expect(this.page.locator('img:left-of(:text("Choice Wolf"))'))
+        .toBeVisible();
+        await expect(this.page.locator('img:left-of(:text("Choice Wolf Pack"))'))
+        .toBeVisible();
+        await expect(this.page.locator('img'))
+        .toHaveCount(3);
+
+        // remove images
+        var closeButtons = this.page.locator('button [data-icon="times"]');
+        while (await closeButtons.count()) {
+        await this.page.click('button [data-icon="times"]');
+        };
+
+        //await this.page.waitForTimeout(5000);
+        // check Free Text
+        await this.page.check(':text("Free Text")');
+
+        // click save
+        await this.page.click(':text("Save")');
+
+        // assert confirm message
+        await expect(this.page.locator(':text("Segmentation Question updated.")'))
+        .toBeVisible({timeout: 50000});
+        // await expect(this.page.locator(':text("Segmentation Question updated.")'))
+        // .not.toBeVisible({timeout: 50000});
+
+        // click edit
+        await this.page.click('[data-icon="pencil"]:right-of(:text("Add image response"))');
+
+        // check image
+        await this.page.check('[value="singleImage"]');
+
+        // assert images removed
+        await expect(this.page.locator('img:left-of(:text("Choice Wolf"))'))
+        .not.toBeVisible();
+        await expect(this.page.locator('img:left-of(:text("Choice Wolf Pack"))'))
+        .not.toBeVisible();
+        await expect(this.page.locator('img'))
+        .toHaveCount(1);
+
+        // close modal
+        await this.page.click('.is-active [role="img"]');
+
+        // delete question
+        await expect(this.page.locator(':text("Add image response")'))
+        .toBeVisible({ timeout: 30000 });
+
+        // click trash
+        await this.page.click('[data-icon="trash"]:right-of(:text("Add image response"))');
+        await expect(this.page.locator('text=Are you sure you want to remove this segmentation question?')).toBeVisible();
+        await this.page.click(`.is-active .ms-ds-button--color-primary:has-text("Delete")`);
+
+        // assert deleted
+        await expect(this.page.locator(':text("Segmentation Question deleted.")'))
+        .toBeVisible({ timeout: 30000 });
+        // await expect(this.page.locator(':text("Segmentation Question deleted.")'))
+        // .not.toBeVisible({ timeout: 30000 });
+        await expect(this.page.locator(':text("Add image response")'))
+        .not.toBeVisible({ timeout: 30000 });
+
+    }
+
+    async segmentationQKeyBehaviour()
+    {
+        await this.page.click('[data-icon="sort-down"]');
+
+        // Click QA Wolves
+        await this.page.click('[data-testid="dropdown"] :text("QA Wolves")');
+
+        // Click Settings
+        await this.page.click('[data-icon="cog"]');
+
+        // Click Segmentation Questions tab
+        await this.page.click(':text("Segmentation Questions")');
+
+        // Act:
+        // Click Add New
+        await this.page.click(':text("Add New")');
+
+        // Enter question title
+        await this.page.fill(
+        `[placeholder="Title / Question you'd like to ask"]`,
+        "question 1"
+        );
+
+        // Input an answer in "Answer 1" field
+        await this.page.fill("#option--0", "answer 1");
+
+        // Click Tab on keyboard twice
+        await this.page.keyboard.press("Tab");
+        //await this.page.keyboard.press("Tab");
+
+        // Assert:
+        // Assert user mouse is moved to "Answer 2" field
+        await expect(
+            this.page.locator('[class*="focused"] [placeholder="Answer 2"]')
+        ).toBeVisible();
+
+        // exit out of question modal
+        await this.page.click(".is-active path");
+
+        // Act:
+        // Click Add New
+        await this.page.click(':text("Add New")');
+
+        // Enter question title
+        await this.page.fill(
+        `[placeholder="Title / Question you'd like to ask"]`,
+        "question 1"
+        );
+
+        // Input an answer in "Answer 1" field
+        await this.page.fill("#option--0", "answer 1");
+
+        // Click Enter on keyboard
+        await this.page.keyboard.press("Enter");
+
+        // Assert clicking Enter allows user mouse to go to "Answer 2" field
+        await expect(
+            this.page.locator('[class*="focused"] [placeholder="Answer 2"]')
+        ).toBeVisible();
+
+        // Input an answer in "Answer 2"
+        await this.page.keyboard.type("answer 2");
+
+        // Click Enter on keyboard
+        await this.page.keyboard.press("Enter");
+
+        // Assert:
+        // Assert clicking Enter allows user to create "Answer 3" field if "Answer 2" was the last answer option
+        await expect(
+            this.page.locator('[class*="focused"] [placeholder="Answer 3"]')
+        ).toBeVisible();
+
+        // exit out of question modal
+        await this.page.click(".is-active path");
+
+        // Act:
+        // Click Add New
+        await this.page.click(':text("Add New")');
+
+        // Enter question title
+        await this.page.fill(
+        `[placeholder="Title / Question you'd like to ask"]`,
+        "question 1"
+        );
+
+        // Input 3 words with semicolons between them (ex: apple; banana; kiwi)
+        await this.page.fill("#option--0", "apple; banana; kiwi");
+
+        // Click Enter on keyboard
+        await this.page.keyboard.press("Enter");
+
+        // Assert:
+        // Assert that answers are separated into their own answer boxes
+        await expect(this.page.locator("#option--0")).toHaveValue("apple");
+        await expect(this.page.locator("#option--1")).toHaveValue("banana");
+        await expect(this.page.locator("#option--2")).toHaveValue("kiwi");
+
+    }
+
 }
 
 module.exports = {BrandSettingsPage}

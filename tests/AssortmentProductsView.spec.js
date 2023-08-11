@@ -24,13 +24,10 @@ test('Upload file using set input files', async({page}) =>
     await loginPage.validLogin(dataset.username,dataset.password);
     const dashboardPage = new DashBoardPage(page);
     dashboardPage.validbulkUpload();
-    page.on("filechooser", async(filechooser) => {
-    await filechooser.setFiles (filePath0)
+    page.on("filechooser", async(filechooser) => {await filechooser.setFiles (filePath0)})
+    await page.click("//div[text()='Product Bulk Upload Status']", {force: true})
 
-        })
-await page.click("//div[text()='Product Bulk Upload Status']", {force: true})
-
-  })
+  });
 
 
 test('Valid Filters in Dashboard page', async({page}) =>
@@ -61,7 +58,7 @@ test('view product details', async({page}) =>
 });
 
 
-test.only('View test link shows test view', async({page}) =>
+test('View test link shows test view', async({page}) =>
 {
 
     const loginPage = new LoginPage(page);
@@ -93,4 +90,15 @@ test('add and delete assortment', async({page}) =>
     await loginPage.validLogin(dataset.username,dataset.password);
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.addAndDeleteAssortment();
+});
+
+test.only('Add Product to parent product', async({page}) =>
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const dashboardPage = new DashBoardPage(page);
+    await dashboardPage.addProductToParentProduct();
+    
 });

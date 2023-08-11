@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class DashBoardPage
 {
     constructor(page)
@@ -186,6 +188,84 @@ class DashBoardPage
         await this.confirmdeletenewassortment.click();
         //await assertNotText(page, `${capitalizedSeason} ${r   andomYear}`);
 
+    }
+
+    async addProductToParentProduct()
+    {
+        await this.page.click(".dropdown-header");
+        await this.page.click("text=QA Static");
+        await this.page.click("text=fall 2023Men's Shirts");
+        expect(this.page, "Men's Shirts", {
+          selector: '[data-testid="assortment-header__details"]',
+        }).toBeVisible;
+        await this.page.click(".menu-item >> text='Products'");
+        
+        // create new product
+        //await assertText(this.page, "New Product");
+        await this.page.click("text=New Product");
+        
+        // add language to new product
+        await this.page.click('[data-icon="plus-circle"]');
+        //await assertText(this.page, "Add Language");
+        await this.page.click("text=Select...");
+        await this.page.click(".ms-select-single__option >> text='Arabic'");
+        await this.page.click(".add-language-add-button");
+        //await assertText(this.page, "Arabic", {selector: ".active .translation-country-name", });
+        await this.page.click("text=English");
+        
+        // add product name
+        //const productName = math.random.words(2);
+        function generateRandomWord() {
+            const alphabet = "abcdefghijklmnopqrstuvwxyz";
+            let productName = "";
+          
+            for (let i = 0; i < 3; i++) {
+              const randomIndex = Math.floor(Math.random() * alphabet.length);
+              productName += alphabet[randomIndex];
+            }
+          
+            return productName;
+          }
+          
+          const productName = generateRandomWord();
+        await this.page.fill('[placeholder="Product Name (required)"]', productName);
+        
+        // add product price
+        await this.page.fill('[type="number"]', "85");
+        
+        // new product required fields
+        var saveBtn = this.page.locator(".bottom-row button >> text='Save'");
+        await expect(saveBtn).toBeDisabled();
+        
+        // set asset format
+        await this.page.click(".ms-select-single__input:above(:text('Style Name'))");
+        await this.page.click('.ms-select-single__option >> text="on-body sample"');
+        await expect(saveBtn).toBeEnabled();
+        
+        // set new product to parent
+        await this.page.click(":text('Select...')");
+        await this.page.click("text=Rufus");
+        
+        // add image
+        this.page.once("filechooser", async (chooser) =>
+          await chooser.setFiles("utils/whiteshirt.jpeg")
+        );
+        await this.page.click("text=browse files");
+        await saveBtn.click({ timeout: 65 * 1000 });
+        //await assertText(this.page, "Product created.");
+
+        // assert product saved
+        await this.page.click(".main-card >> nth=0");
+        //await assertText(this.page, "Style + Style Variants:");
+        var variants = this.page.locator(".variant-thumbnail");
+        await variants.last().click();
+        console.log(productName);
+        //await assertText(this.page, productName);
+        
+        // style + style variants are listed
+        expect(await variants.count()).toBeGreaterThan(1);
+        await this.page.click('[data-icon="times"]');
+         
     }
 
     

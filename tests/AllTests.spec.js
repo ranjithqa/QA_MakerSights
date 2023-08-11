@@ -2,6 +2,7 @@ const {test,expect} = require('@playwright/test')
 const dataset = JSON.parse(JSON.stringify(require("../utils/TestData.json")))
 const {LoginPage} = require('../pageobjects/LoginPage');
 const {AllTestsPage} = require('../pageobjects/AllTestsPage');
+const { chromium } = require('@playwright/test');
 
 
 test('validate All Tests page Added Edit Grouped Tests button', async({page}) =>
@@ -112,5 +113,16 @@ test('validate Column Headers in All Tests page', async({page}) =>
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validColumnHeaderFilters();
     
+});
+
+test.only('Add Learning button is hidden when viewed through shared link', async ({page}) => 
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const alltestspage = new AllTestsPage(page);
+    await alltestspage.validSharedLink();
+   
 });
 

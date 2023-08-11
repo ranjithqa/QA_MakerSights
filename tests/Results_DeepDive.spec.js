@@ -40,3 +40,14 @@ test('verify name, color, pricing, score and percentile on deep dive carousel im
     await expect(resultsPage.deepDiveResponseHeaderPositive).toHaveText("Positive Respondents (283)");
 
 });
+
+test.only('Additional Deep Dive', async({page}) => 
+{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+    const alltestsPage = new AllTestsPage(page);
+    await alltestsPage.additionalDeepDive();
+
+});

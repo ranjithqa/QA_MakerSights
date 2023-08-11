@@ -172,6 +172,7 @@ class AllTestsPage{
             await this.kebabmenu.click();
         }
 
+
         async validSharedLink()
         {
             await this.page.click('[data-icon="sort-down"]');
@@ -344,8 +345,15 @@ class AllTestsPage{
                 await expect(this.page.locator('text="good"')).toBeHidden();
                 await expect(this.page.locator('text="cool"')).toBeHidden();
                 await expect(this.page.locator('text="Preis"').first()).toBeVisible();
-
             }
+        async goToSalesProjectionSurvey() {
+            await this.alltestssearchbar.fill("2019 - Holiday - Mens - Tops");
+            await this.kebabmenu.click();
+        }
+
+
+
+           
 }
     
 module.exports = {AllTestsPage}

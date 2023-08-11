@@ -11,7 +11,7 @@ class ResultsPage
         this.loadMore = page.locator("//button[text()='Load More']");
         this.viewMore = page.locator("//button[text()='View More']  >> nth=0");
 
-        this.filterResponseCount = page.locator(".ms-filter-section:has-text('1246 of 1246 (100%)')");
+        // this.filterResponseCount = page.locator(".ms-filter-section:has-text('1246 of 1246 (100%)')");
         this.vsAllRespondents = page.locator(".ms-filter-section:has-text(' vs. all respondents')");
         this.unfilteredDetractorPercentage = page.locator("div.ms-deep-dive-early-stage-stats__percentage-number:has-text('23')");
         this.filteredDetractorPercentage = page.locator("div.ms-deep-dive-early-stage-stats__percentage-number:has-text('24')");
@@ -58,13 +58,17 @@ class ResultsPage
         this.LEGAddProductDusk = page.locator("button:has-text('Dusk')");
         this.LEGProcessChartButton = page.locator(":text('Process Chart')");
         this.LEGProcessingChartSpinner = page.locator(":text('Processing Chart')");
-        this.LEGScreen = page.locator(".ms-turf-result");
+        this.LEGResults = page.locator(".ms-turf-result");
+        this.LEGBarChart = page.locator(".turf-chart__chart");
+        this.LEGNoSignificantDataScreen = page.locator('text="With the set of filters that you have selected, we are unable to show you significant data for Line Efficiency. Try selecting a different filter combination for more meaningful results."');
+        this.LEGLessThan250ResponsesScreen = page.locator("text='The Line Efficiency Graph is not able to be produced with this test due to the number of products and the number of respondents. If you would like to generate a Line Efficiency Graph, please ensure you have 250 respondents.'")
+        this.LEGBottomProducts = page.locator(".turf-bottom-tick__image img");
 
 
         
         // Filters
         this.filterByNonBinary = page.locator("div.results-filters__option-label:has-text('Non-binary')");
-        this.filterByMale = page.locator("div.results-filters__option-label:has-text('Male')");
+        this.filterByMale = page.locator("div.results-filters__option-label:text-is('Male')");
         this.filterByFemale = page.locator("div.results-filters__option-label:has-text('Female')");
         this.filterByPreferNotToSay = page.locator("div.results-filters__option-label:has-text('Prefer not to say')");
 
@@ -74,11 +78,20 @@ class ResultsPage
         this.filterByCountry_China = page.locator("#results-country-tab__china");
         this.filterAudienceAlert = page.locator(".ms-alert-content")
 
-        this.LEGFilterByMale = page.locator(".ms-form-group__label:has-text('Male')");
+        this.LEGFilterByMale = page.locator(".ms-form-group__label.ms-form-group__label--right:text-is('male')");
+        // (".ms-form-group__label:has-text('Male')");
         this.LEGFilterByFemale = page.locator(".ms-form-group__label:has-text('Female')");
         this.LEGFilterByAll = page.locator(".ms-form-group__label:has-text('All')");
-        this.LEGFilterByCountry_US = page.locator(".flag-icon flag-shadow >>nth=1");
 
+        this.clearFilter = page.locator(".ms-ds-button ms-ds-button--color-secondary ms-ds-button--size-medium ms-ds-button--variant-text unstyled-button");
+    }
+
+    async getResponseCountLocator(responseCount) {
+        return this.page.locator(".ms-filter-section:has-text('${responseCount} of ${responseCount} (100%)')");
+    }
+
+    async getFilteredResponseCount(filteredResponseCount, totalResponseCount, percentage) {
+        return this.page.locator(".ms-filter-section:has-text('${filteredResponseCount} of ${totalResponseCount} (${percentage}%)')");
     }
 
 }

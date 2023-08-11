@@ -22,6 +22,7 @@ class SurveyCreatorPage
 
 
 
-
     }
 }
+
+module.exports = {SurveyCreatorPage}

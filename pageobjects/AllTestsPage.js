@@ -175,8 +175,6 @@ class AllTestsPage{
 
         async validSharedLink()
         {
-            await this.page.click('[data-icon="sort-down"]');
-            await this.page.click("text=QA Static");
             await this.page.click("text=All Tests");
             await this.page.click(':text("Closed")');
             await this.page.click("(//span[@class='test-title'])[2]");
@@ -237,8 +235,6 @@ class AllTestsPage{
 
             async additionalDeepDive()
             {
-                await this.page.click('[data-icon="sort-down"]');
-                await this.page.click("text=QA Static");
                 await this.page.click("text=All Tests");
                 await this.page.fill('[placeholder="Search..."]', "2022");
                 await this.page.click(":text-is('2022 - Fall - Mens Shirts')");

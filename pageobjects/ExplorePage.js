@@ -17,11 +17,6 @@ class ExplorePage{
     async validExplorePage()
     {
         //await expect(this.page.myassortmentsheading).toBeVisible();
-        await this.page.waitForTimeout(1000);
-        await this.mysettingsdropdown.click();
-        await this.qastatic.click();
-        await this.page.waitForTimeout(1000);
-        await this.page.reload();
         await this.explorepage.click();
         await this.page.waitForTimeout(1000);
         //await this.expect(this.page.filterbyheading).toBeVisible();
@@ -37,9 +32,6 @@ class ExplorePage{
 
     async validExploreFeed()
     {
-        await this.page.waitForTimeout(1000);
-        await this.mysettingsdropdown.click();
-        await this.qastatic.click();
         await this.page.waitForTimeout(1000);
         await this.page.reload();
     }

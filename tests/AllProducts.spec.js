@@ -10,6 +10,7 @@ test('view All Products', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const allproductsPage = new AllproductsPage(page);
     await allproductsPage.AllProducts();
     
@@ -21,6 +22,7 @@ test('Download Image', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const allproductsPage = new AllproductsPage(page);
     await allproductsPage.AllProducts();
     await allproductsPage.DownloadImg();
@@ -36,6 +38,7 @@ test('Search all products', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const allproductsPage = new AllproductsPage(page);
     await allproductsPage.AllProducts();
     await allproductsPage.validSearchProduct(dataset.Austinproduct);

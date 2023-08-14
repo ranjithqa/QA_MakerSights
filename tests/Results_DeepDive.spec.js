@@ -41,12 +41,13 @@ test('verify name, color, pricing, score and percentile on deep dive carousel im
 
 });
 
-test.only('Additional Deep Dive', async({page}) => 
+test('Additional Deep Dive', async({page}) => 
 {
     const loginPage = new LoginPage(page);
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/6195868ba759f770948185a6/timeline");
     const alltestsPage = new AllTestsPage(page);
     await alltestsPage.additionalDeepDive();
 

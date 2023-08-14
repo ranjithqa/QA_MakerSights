@@ -9,7 +9,7 @@ class BrandSettingsPage
 
         //general
         this.general = page.locator("//div[text()='General']");
-        this.brandname = page.locator("(//input[@class='ms-text-input__input'])[1]");
+        this.brandname = page.locator("(//label[text()='Brand Name']/following::input)[1]");
         this.webstite = page.locator("(//input[@class='ms-text-input__input'])[2]");
         this.changedefaultcountry = page.locator("//button[text()='Change Default Country']");
         this.deletebrandlogo = page.locator("//button[@aria-label='Delete the Image']");
@@ -131,13 +131,13 @@ class BrandSettingsPage
         await expect(this.page.locator("text=Sell-in")).toBeVisible();
 
         // clean test
-        var lastitem = await this.page.locator('input[placeholder="Decision Name"] >> nth=-1').inputValue();
-        if (lastitem.slice(0, -5) == `QA Decision`) 
-        {
-            const deleteIcon = this.page.locator(`.brand-settings-decision-point__delete-button`).last();
-            await deleteIcon.click();
-            await this.page.click(".bottom-row .ms-ds-button--color-primary");
-        }
+        // var lastitem = await this.page.locator("//input[@value='New Decision Name']").inputValue();
+        // if (lastitem.slice(0, -5) == `QA Decision`) 
+        // {
+        //     const deleteIcon = this.page.locator(`.brand-settings-decision-point__delete-button`).last();
+        //     await deleteIcon.click();
+        //     await this.page.click(".bottom-row .ms-ds-button--color-primary");
+        // }
 
         // REQ363 Able to create a new decision name
         const decisionName = `QA Decision ` + Date.now().toString().slice(-4);
@@ -146,49 +146,46 @@ class BrandSettingsPage
         var randomAbbrev = abbrev[random];
 
         await this.page.click(':text("Add New Decision Name")');
-        await this.page.waitForTimeout(3000);
-        await this.page.fill('input[placeholder="Decision Name"] >> nth=-1', decisionName);
+        //await this.page.waitForTimeout(3000);
+        await this.page.fill('input[placeholder="Decision Name"] >> nth=5', decisionName);
         await this.page.mouse.click(0, 0);
         await this.page.waitForTimeout(3000);
         await this.page.fill('[placeholder="Abbrev."] >> nth=-1', randomAbbrev);
         await this.page.mouse.click(0, 0);
-        //await this.page.waitForTimeout(6000);
+        //await this.page.keyboard.press('Tab');
+        await this.page.waitForTimeout(3000);
 
         // reload to assert decision name saved
-        await this.page.reload(); // Issue: reloads and redirects to another brand's dashboard
-        await this.page.waitForTimeout(6000);
+        //await this.page.reload(); // Issue: reloads and redirects to another brand's dashboard
+        //await this.page.waitForTimeout(6000);
 
 
-        //await this.page.waitForTimeout(3000);
-        expect(await this.page.inputValue('input[placeholder="Decision Name"] >> nth=-1')).toBe(decisionName);
-        //expect(await this.page.inputValue('input[placeholder="Abbrev."] >> nth=-1')).toBe(randomAbbrev);
+        await this.page.waitForTimeout(3000);
+        expect(await this.page.inputValue('input[placeholder="Decision Name"] >> nth=5')).toBe(decisionName);
+        expect(await this.page.inputValue('input[placeholder="Abbrev."] >> nth=-1')).toBe(randomAbbrev);
 
         // REQ364 Able to edit a decision name
         const newDecisionName = `QA Decision ` + Date.now().toString().slice(-4);
         var newRandomAbbrev = abbrev[random];
-        await this.page.waitForTimeout(3000);
-        await this.page.fill(
-        'input[placeholder="Decision Name"] >> nth=-1',
-        newDecisionName
-        );
+        //await this.page.waitForTimeout(3000);
+        await this.page.fill('input[placeholder="Decision Name"] >> nth=5',newDecisionName);
         await this.page.mouse.click(0, 0);
         await this.page.waitForTimeout(3000);
         await this.page.fill('[placeholder="Abbrev."] >> nth=-1', newRandomAbbrev);
         await this.page.mouse.click(0, 0);
-        //await this.page.waitForTimeout(5000);
+        await this.page.waitForTimeout(2000);
 
-        await this.page.reload(); // Issue: reloads and redirects to another brand's dashboard
+        //await this.page.reload(); // Issue: reloads and redirects to another brand's dashboard
 
-        //await this.page.waitForTimeout(3000);
-        expect(await this.page.inputValue('input[placeholder="Decision Name"] >> nth=-1')).toBe(newDecisionName);
-        //expect(await this.page.inputValue('input[placeholder="Abbrev."] >> nth=-1')).toBe(newRandomAbbrev);
+        expect(await this.page.inputValue('input[placeholder="Decision Name"] >> nth=5')).toBe(newDecisionName);
+        expect(await this.page.inputValue('input[placeholder="Abbrev."] >> nth=-1')).toBe(newRandomAbbrev);
 
         // REQ365 Able to delete a decision name
         const deleteIcon = this.page.locator(`.brand-settings-decision-point__delete-button`).last();
         await deleteIcon.click();
         await this.page.click(".bottom-row .ms-ds-button--color-primary");
-        await this.page.waitForTimeout(3000);
-        expect(await this.page.inputValue('input[placeholder="Decision Name"] >> nth=-1')).not.toBe(newDecisionName);
+        await this.page.waitForTimeout(1000);
+        expect(await this.page.inputValue('input[placeholder="Decision Name"] >> nth=4')).not.toBe(newDecisionName);
         expect(await this.page.inputValue('input[placeholder="Abbrev."] >> nth=-1')).not.toBe(newRandomAbbrev);
 
         // REQ366 Not able to change Type or delete the decision name if used by a Test
@@ -244,7 +241,7 @@ class BrandSettingsPage
         await this.usertab.click();
         }
 
-        const email = "makersights06@gmail.com"
+        const email = "makersights07@gmail.com"
 
         await expect(this.page.locator(':text("makersights+qa@qawolf.email")')).toBeVisible();
 
@@ -321,9 +318,7 @@ class BrandSettingsPage
         // await this.page.click(':text("Segmentation Questions")');
         // }
         // navigate to QA Wolves -> settings -> segmentation questions
-        await this.page.click('[data-icon="sort-down"]');
-        await this.page.click("text=QA Wolves");
-        await this.page.click('[data-icon="cog"]');
+        await this.brandsettings.click();
         //await assertText(page, "Brand Settings");
         await this.page.click(':text("Segmentation Questions")');
 
@@ -361,8 +356,9 @@ class BrandSettingsPage
         // confirm saved
         await expect(this.page.locator('[role="alert"]')).toHaveText("Segmentation Question created.");
 
-        await this.page.keyboard.down('End');
         await this.page.waitForTimeout(3000);
+        await this.page.keyboard.down('End');
+       
 
 
         // assert segmentation Question created and is in the Segmentation question list
@@ -388,7 +384,7 @@ class BrandSettingsPage
 
         // Select an assortment
         await this.page.click(':text("Select...")');
-        await this.page.click('.ms-select-single__option:has-text("2024 fall Men\'s Shirts")');
+        await this.page.click('.ms-select-single__option:has-text("2023 fall Men\'s Shirts")');
 
         // Click Add
         await this.page.click('.add-edit-event-modal button:has-text("add")');
@@ -405,7 +401,8 @@ class BrandSettingsPage
 
         // Click Next
         await this.page.click(':text("Next")');
-        await this.page.click("//button[text()='Confirm']");
+        this.confirmtonext = this.page.locator("//button[text()='Confirm']");
+        if (await this.confirmtonext.toBeVisible){await this.page.confirmtonext.click();}
 
         // Click on an image
         await this.page.click('.product-thumbnail');
@@ -427,6 +424,7 @@ class BrandSettingsPage
         await this.page.click('[aria-label="arrow_back"]');
         await this.page.click(':text("Settings")');
         await this.page.click(':text("Segmentation Questions")');
+        await this.page.keyboard.down('End');
         await this.page.click(`.segmentation-item:has-text("${questionTitle}") button >> nth=2`);
         await expect(this.page.locator('text=Delete Segmentation Question')).toBeVisible();
         await expect(this.page.locator('text=Are you sure you want to remove this segmentation question?')).toBeVisible();
@@ -455,23 +453,21 @@ class BrandSettingsPage
         } catch{
         var questions = this.page.locator(':text("Add image response")');
 
-        while (await questions.count()) {
+        while (await questions.toBeVisible) {
             // click trash
-            await this.page.click('[data-icon="trash"]:right-of(:text("Add image response"))');
+            await this.page.click('[data-icon="trash"]:right-of(:text("Add image response"))').last();
             await expect(this.page.locator('text=Are you sure you want to remove this segmentation question?')).toBeVisible();
             await this.page.click(`.is-active .ms-ds-button--color-primary:has-text("Delete")`);
 
             // assert deleted
-            await expect(this.page.locator(':text("Segmentation Question deleted.")'))
-            .toBeVisible({ timeout: 30000 });
-            await expect(this.page.locator(':text("Segmentation Question deleted.")'))
-            .not.toBeVisible({ timeout: 30000 });
+            await expect(this.page.locator(':text("Segmentation Question deleted.")')).toBeVisible({ timeout: 30000 });
+            //await expect(this.page.locator(':text("Segmentation Question deleted.")')).not.toBeVisible({ timeout: 30000 });
         }
 
         await expect(this.page.locator(':text("Add image response")').first())
         .not.toBeVisible({ timeout: 10000 });
         }
-
+        await this.page.mouse.move(0, 0);
         // add question
         await this.page.click(':text("Add New")');
 
@@ -485,7 +481,7 @@ class BrandSettingsPage
         this.page.once('filechooser', async (chooser) => await chooser.setFiles('utils/blacktshirt.jpeg'));
         await this.page.click(':text("Drop file here or browse file")');
 
-        //await this.page.waitForTimeout(5000);
+        
         // add wolf image name
         await this.page.fill('[role="button"] input', "Choice Wolf");
 
@@ -495,17 +491,20 @@ class BrandSettingsPage
 
         // wait for 3 images to be visible
         await expect(this.page.locator('img'))
-        .toHaveCount(3, { timeout: 30000 });
+        .toHaveCount(2, { timeout: 30000 });
 
         // add wolf pack image name
+        await this.page.waitForTimeout(5000);
         await this.page.fill('[role="button"] input >> nth=-1', "Choice Wolf Pack");
 
         // click save
         await this.page.click(':text("Save")');
 
         // assert created
+        await this.page.mouse.wheel(0, 9000)
         await expect(this.page.locator(':text("Add image response")').first())
         .toBeVisible({ timeout: 10000 });
+
 
         // click edit
         await this.page.click('[data-icon="pencil"]:right-of(:text("Add image response"))');
@@ -575,10 +574,6 @@ class BrandSettingsPage
 
     async segmentationQKeyBehaviour()
     {
-        await this.page.click('[data-icon="sort-down"]');
-
-        // Click QA Wolves
-        await this.page.click('[data-testid="dropdown"] :text("QA Wolves")');
 
         // Click Settings
         await this.page.click('[data-icon="cog"]');

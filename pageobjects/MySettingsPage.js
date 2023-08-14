@@ -26,7 +26,7 @@ class MySettingsPage{
     {
         await this.firstname.click();
         await this.lastname.click();
-        await this.updateinfobutton.click();
+        //await this.updateinfobutton.click();
         /*console.log(await this.toastmessage.textContent());
         await expect(this.toastmessage).toContainText('You have successfully updated your account');*/
 

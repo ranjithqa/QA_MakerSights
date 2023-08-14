@@ -9,6 +9,7 @@ test('Explore:Feed Filters', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/6195868ba759f770948185a6/timeline");
     const explorePage = new ExplorePage(page);
     await explorePage.validExplorePage();
 });
@@ -20,6 +21,7 @@ test('Explore Feed: Initial access to the feed', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/6195868ba759f770948185a6/timeline");
     const explorePage = new ExplorePage(page);
     await explorePage.validExploreFeed();
     expect(await page.locator(".ms-card__content").count()).toBeLessThanOrEqual(10);
@@ -34,6 +36,7 @@ test.only('Explore Feed: Real time comment updates - snip card', async({browser}
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/6195868ba759f770948185a6/timeline");
     const explorePage = new ExplorePage(page);
     await explorePage.validExploreFeed();
     const explorepage = page.locator("//a[contains(text(),'Explore')]");

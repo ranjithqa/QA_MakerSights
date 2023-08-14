@@ -3,7 +3,7 @@ const dataset = JSON.parse(JSON.stringify(require("../utils/TestData.json")))
 const {LoginPage} = require('../pageobjects/LoginPage');
 const {DashBoardPage} = require('../pageobjects/DashBoardPage');
 const {SurveyCreatorPage} = require('../pageobjects/SurveyCreatorPage');
-const faker = require('faker');
+//const faker = require('faker');
 
 test('verify dynata panel survey - sketch review', async({page}) => {
     const loginPage = new LoginPage(page);

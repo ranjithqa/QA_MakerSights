@@ -11,6 +11,7 @@ test('validate All Tests page Added Edit Grouped Tests button', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validAddeditgroupedtests();
 
@@ -25,13 +26,11 @@ test('validate Preview in All Tests page', async({browser}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validPreview();
     const preview = page.locator("//div[text()='Preview']");
-    const [newPage] =await  Promise.all([
-    context.waitForEvent('page'),
-    preview.click(),
-    ])
+    const [newPage] =await  Promise.all([context.waitForEvent('page'),preview.click(),])
     const text = await newPage.locator("//*[@id='tab-content-0']/div/md-content/div/div[2]/span/h1").textContent();
     console.log(text);
     await page.close();
@@ -43,6 +42,7 @@ test('validate Links in All Tests page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validPreview();
     await alltestspage.validLinks();
@@ -56,6 +56,7 @@ test('validate Duplicate in All Tests page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validPreview();
     await alltestspage.validDuplicate();
@@ -69,6 +70,7 @@ test('validate Delete in All Tests page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validPreview();
     await alltestspage.validDelete();
@@ -81,6 +83,7 @@ test('validate Filters in All Tests page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validGlobalLineReviewFilters();
     await expect( page.locator("(//input[@type='checkbox'])[1]")).toBeChecked();
@@ -110,6 +113,7 @@ test('validate Column Headers in All Tests page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validColumnHeaderFilters();
     
@@ -121,6 +125,7 @@ test.only('Add Learning button is hidden when viewed through shared link', async
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto('https://qa-app.makersights.com/brand/6195868ba759f770948185a6/timeline');
     const alltestspage = new AllTestsPage(page);
     await alltestspage.validSharedLink();
    

@@ -3,7 +3,7 @@ class LogoutPage{
     constructor(page)
     {
         this.page = page;
-        this.signout= page.locator(".dropdown-menu > :nth-child(6)");
+        this.signout= page.locator("//div[text()='Sign Out']");
     }
 
     async validSignOut()

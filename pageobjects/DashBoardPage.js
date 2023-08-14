@@ -23,12 +23,12 @@ class DashBoardPage
 
 
         //filters
-        this.allseasons = page.locator("/div[text()='All Seasons']");
+        this.allseasons = page.locator("//div[text()='All Seasons']");
         this.fall = page.getByLabel("fall");
         this.holiday = page.getByLabel("holiday");
-        this.holiday = page.getByLabel("resort");
-        this.holiday = page.getByLabel("spring");
-        this.holiday = page.getByLabel("summer");
+        this.resort = page.getByLabel("resort");
+        this.spring = page.getByLabel("spring");
+        this.summer = page.getByLabel("summer");
         this.allseasonscloseicon = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6']//div)[1]");
 
         this.allyears = page.locator("(//div[@class='ms-select-multiple__indicators css-1wy0on6'])[2]");
@@ -69,7 +69,7 @@ class DashBoardPage
         this.createmeeting = page.locator("//button[text()='Create Meeting']");
         this.expandimage = page.locator("(//img[@class='ms-image__image ms-image__image--contain'])[3]");
         this.firstproduct = page.locator("(//div[@class='image-container'])[1]");
-        this.closeproductdetails = page.locator("(//div[@class='close-icon'])[2]");
+        this.closeproductdetails = page.locator("(//div[@class='close-icon'])[1]");
         this.dashboardtests = page.locator("(//div[text()='Tests'])[2]");
         this.globallinereviewfilter = page.locator("(//input[@type='checkbox'])[1]");
         this.sketchreviewfilter = page.locator("(//input[@type='checkbox'])[2]");
@@ -192,8 +192,6 @@ class DashBoardPage
 
     async addProductToParentProduct()
     {
-        await this.page.click(".dropdown-header");
-        await this.page.click("text=QA Static");
         await this.page.click("text=fall 2023Men's Shirts");
         expect(this.page, "Men's Shirts", {
           selector: '[data-testid="assortment-header__details"]',

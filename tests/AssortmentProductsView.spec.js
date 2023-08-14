@@ -11,6 +11,7 @@ test('Download products and template files', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline");
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.validbulkDownload();
     
@@ -22,6 +23,7 @@ test('Upload file using set input files', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline");
     const dashboardPage = new DashBoardPage(page);
     dashboardPage.validbulkUpload();
     page.on("filechooser", async(filechooser) => {await filechooser.setFiles (filePath0)})
@@ -36,14 +38,10 @@ test('Valid Filters in Dashboard page', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline");
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.validFilters();
 
-});
-
-test('product modal doesnt affect scroll position ', async({page}) =>
-{
-    
 });
 
 test('view product details', async({page}) =>
@@ -53,6 +51,7 @@ test('view product details', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline");
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.validateProductDetailsView();
 });
@@ -65,6 +64,7 @@ test('View test link shows test view', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline");
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.validateTestsOverview();
     await dashboardPage.validGlobalLineReviewFilters()
@@ -88,6 +88,7 @@ test('add and delete assortment', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/607740bcc915ce2b18387719/timeline");
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.addAndDeleteAssortment();
 });
@@ -98,6 +99,7 @@ test.only('Add Product to parent product', async({page}) =>
     await loginPage.goto();
     console.log(await page.title());
     await loginPage.validLogin(dataset.username,dataset.password);
+    await page.goto("https://qa-app.makersights.com/brand/6195868ba759f770948185a6/timeline");
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.addProductToParentProduct();
     

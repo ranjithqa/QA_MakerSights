@@ -21,6 +21,7 @@ class AllTestsPage{
         this.deletetestcloseicon = page.locator("(//div[text()='Delete Test']/following-sibling::div)[1]");
         this.welcomeheading = page.locator("/*[@id='tab-content-0']/div/md-content/div/div[2]/span/h1");
         this.gobacklink = page.locator("//div[text()='Go Back']");
+        this.noTestsFound = page.locator("//div[text()='No tests found']");
         
         //Decision Points
         this.globallinereviewfilter = page.locator("(//input[@type='checkbox'])[1]");
@@ -172,6 +173,20 @@ class AllTestsPage{
         async goToSalesProjectionSurvey() {
             await this.alltestssearchbar.fill("2019 - Holiday - Mens - Tops");
             await this.kebabmenu.click();
+        }
+
+        async searchTest(testname) {
+            await this.alltestspage.click();
+            await this.alltestssearchbar.fill(testname);
+            await this.kebabmenu.click();
+        }
+
+        async deleteTest(testname) {
+            await this.alltestspage.click();
+            await this.alltestssearchbar.fill(testname);
+            await this.kebabmenu.click();
+            await this.delete.click();
+            await this.deletetestyesbutton.click();
         }
 
 

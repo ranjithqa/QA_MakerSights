@@ -20,6 +20,8 @@ class SurveyCreatorPage
         this.cancelpopup = page.locator("//button[contains(@class,'md-primary md-cancel-button')]");
         this.readytosend = page.locator("//button[text()='Ready to Send']");
 
+        this.panelSelection = page.locator(".ms-form-select panel-provider-select");
+
 
 
     }

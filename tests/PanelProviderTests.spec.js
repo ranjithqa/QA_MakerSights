@@ -29,6 +29,7 @@ test('Verify set up of a Dynata Panel test from Survey Creator', async({page}) =
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.validateTestsOverview();
 
+    // create a new survey
     await dashboardPage.createtest.click();
     await page.click('div.dp-inner-row.dp-title.e2e-dp-button-sketch_review:has-text("Sketch Review")');
     const testName = `QAW: ${faker.random.words(2)}`;
@@ -42,15 +43,17 @@ test('Verify set up of a Dynata Panel test from Survey Creator', async({page}) =
     await page.click('.product-thumbnail.selectable >>nth=9');
     await page.click('button:text("Next")'); 
 
+    // go to Review screen
     await page.click('.step-text:has-text("Review")');
 
-    // test editor: change link type
+    // change crm to recruited audience and select panel provider Dynata
     await page.selectOption('.ms-form-select.audience-type-select', { value: 'panel' });
 
     await page.selectOption('.ms-form-select.panel-provider-select', { label: 'Dynata' });
     await page.click('button:text("Ready to Send")'); 
     await page.click('button:text("Yes, Publish")');
 
+    // delete the survey
     const allTestsPage = new AllTestsPage(page);
     await allTestsPage.searchTest(testName);
     await allTestsPage.deleteTest(testName);
@@ -68,6 +71,7 @@ test('Verify set up of a Lucid Panel test from Survey Creator', async({page}) =>
     const dashboardPage = new DashBoardPage(page);
     await dashboardPage.validateTestsOverview();
 
+    // create a new survey
     await dashboardPage.createtest.click();
     await page.click('div.dp-inner-row.dp-title.e2e-dp-button-sketch_review:has-text("Sketch Review")');
     const testName = `QAW: ${faker.random.words(2)}`;
@@ -81,15 +85,17 @@ test('Verify set up of a Lucid Panel test from Survey Creator', async({page}) =>
     await page.click('.product-thumbnail.selectable >>nth=9');
     await page.click('button:text("Next")'); 
 
+    // go to Review screen
     await page.click('.step-text:has-text("Review")');
 
-    // test editor: change link type
+    // change crm to recruited audience and select panel provider Lucid
     await page.selectOption('.ms-form-select.audience-type-select', { value: 'panel' });
 
     await page.selectOption('.ms-form-select.panel-provider-select', { label: 'Lucid' });
     await page.click('button:text("Ready to Send")'); 
     await page.click('button:text("Yes, Publish")');
 
+    // delete the survey
     const allTestsPage = new AllTestsPage(page);
     await allTestsPage.searchTest(testName);
     await allTestsPage.deleteTest(testName);
@@ -120,15 +126,17 @@ test('Verify set up of a Innovate MR Panel test from Survey Creator', async({pag
     await page.click('.product-thumbnail.selectable >>nth=9');
     await page.click('button:text("Next")'); 
 
+    // go to Review screen
     await page.click('.step-text:has-text("Review")');
 
-    // test editor: change link type
+    // change crm to recruited audience and select panel provider Innovate mr
     await page.selectOption('.ms-form-select.audience-type-select', { value: 'panel' });
 
     await page.selectOption('.ms-form-select.panel-provider-select', { label: 'Innovate-mr' });
     await page.click('button:text("Ready to Send")'); 
     await page.click('button:text("Yes, Publish")');
 
+    // delete the survey
     const allTestsPage = new AllTestsPage(page);
     await allTestsPage.searchTest(testName);
     await allTestsPage.deleteTest(testName);

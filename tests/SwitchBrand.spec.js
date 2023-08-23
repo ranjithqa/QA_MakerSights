@@ -15,9 +15,27 @@ test('verify an admin user can switch brands', async({page}) =>
     await expect(page.locator('[data-testid="dropdown-item"]:has-text("Taylor Stitch")')).toHaveCount(1);
     await page.waitForTimeout(3000);
 
-    // select and assert QA Static brand
+    // select and assert Taylor Stitch brand
     await page.click( "text=Taylor Stitch");
     await page.waitForTimeout(6000);
     await expect(page.locator(".ms-image__image.ms-image__image--contain")).toBeVisible();
-    // await assertText(page, "Holiday 2023\nGeneric");
+});
+
+test('verify an admin user can add a new brand from Brands page', async({page}) => 
+{
+
+    // to be done
+});
+
+test('verify an admin user can delete a brand from Brands page', async({page}) => 
+{
+
+    // to be done
+    // do not delete an existing brand - create a new one and delete that one only
+});
+
+test('verify an admin user can edit a brand from Brands page', async({page}) => 
+{
+
+    // to be done
 });

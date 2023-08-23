@@ -13,6 +13,7 @@ class SurveyTaker2{
         this.welcome = page.locator(":text('Welcome!')");
         this.welcomeMessage = page.locator(":text('As one of our most valued customers')");
         this.onwardButton = page.locator(":text('Onward!')");
+        this.starNowButton = page.locator(":text('Start now')");
 
         // intro screen
         this.next = page.locator(":text('Next')");

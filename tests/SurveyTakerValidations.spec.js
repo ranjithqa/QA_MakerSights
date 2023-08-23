@@ -119,4 +119,41 @@ test('verify user can submit a survey with survey taker 2.0', async({page}) =>
 
 });
 
+test('verify user can submit a survey with survey taker 2.0 + product + demo questions', async({page}) =>
+{
+    await page.goto("https://qa-go.makersights.com/v2/woyoltzf/legal/64e3d56ff0ff1935c5c95794");
+    const surveyTaker2 = new SurveyTaker2(page);
 
+    // validate legal screen elements
+    await expect(surveyTaker2.makersightslogo).toBeVisible();
+    // await expect(surveyTaker2.cookiePolicy).toBeVisible();
+    // await expect(surveyTaker2.enterSurvey).toBeVisible();
+    await surveyTaker2.enterSurvey.click();
+
+    // validate welcome screen elements
+    await expect(surveyTaker2.starNowButton).toBeVisible();
+    await surveyTaker2.starNowButton.click();
+    
+    // click next on intro screen
+    await page.waitForSelector('img');
+    await surveyTaker2.next.click();
+
+    // answer segmentation questions and verify all options are selectable
+    await surveyTaker2.selectNonBinary.click();
+    await surveyTaker2.next.click();
+
+    // rank text question
+    await surveyTaker2.rankResponse1.hover();
+    await page.mouse.down();
+    await page.mouse.move(0,1500);
+    await page.mouse.up();
+    await page.waitForTimeout(1000);
+    await surveyTaker2.next.click();
+
+    // single image select question
+    await surveyTaker2.imageSingleOption1.click();
+    await surveyTaker2.next.click();
+
+    await page.fill('.mantine-Input-input.mantine-Select-input', '25');
+    await surveyTaker2.next.click();
+});

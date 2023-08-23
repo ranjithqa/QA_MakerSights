@@ -190,3 +190,31 @@ test('verify LEG is not generated for an active test with <250 responses', async
 
     await expect(resultsPage.LEGLessThan250ResponsesScreen).toBeVisible();
 });
+
+test('verify clicking on a LEG result bar links to Deep Dive page', async({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    console.log(await page.title());
+    await loginPage.validLogin(dataset.username,dataset.password);
+
+    // navigate to Results - LEG
+    await page.goto('https://qa-app.makersights.com/brand/6195868ba759f770948185a6/campaign/61a7061e3e5e72f27cc4c21d/results?tab=line-efficiency-graph');
+
+    // click on Nashville product in chart
+    await page.click('[data-testid*="turf-product-button"]:has-text("Nashville")');
+
+    // assert on deep dive card for product
+    await expect(page.locator(".ms-results-card-header__product-name:has-text('Nashville')")).toBeVisible();
+    await expect(page.locator('.ms-results-card-header__score-number:has-text("57")')).toBeVisible();
+
+    // go to line efficiency
+    await page.click(':text("Line Efficiency")');
+
+    // click while overlay is hovered
+    await page.hover(".turf-chart__overlay-rect", { timeout: 7000, force: true });
+    await page.click(".turf-chart__overlay-rect", { timeout: 7000, force: true });
+
+    // assert on deep dive card for product
+    await expect(page.locator(".ms-results-card-header__product-name:has-text('Nashville')")).toBeVisible();
+    await expect(page.locator('.ms-results-card-header__score-number:has-text("57")')).toBeVisible();
+});
